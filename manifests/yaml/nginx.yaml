@@ -1,19 +1,39 @@
-        
-        apiVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/instance: nginx
-  name: argo-nginx
+    app: my-app
+  name: my-deployment
   namespace: default
 spec:
   replicas: 1
+ selector:
+   matchlabels:
+     app: my-app
   template:
     metadata:
       labels:
-        editor: argo
+        app: my-app
     spec:
       containers:
-        - image: nginx
-          name: nginx
-
+        - image: nginx:latest
+          name: my-container
+          resources:
+            requests:
+              memory: "64Mi"
+             cpu: "240n"
+            ports:
+            - containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata: 
+  name: my-app-service
+spec:
+  selector:
+    app: my-app
+  ports:
+    - port: 80
+      targetPort:80
+      protocol: TCP
+   type:NodePort
