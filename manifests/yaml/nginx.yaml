@@ -1,6 +1,9 @@
-apiVersion: apps/v1
+        
+        apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    app.kubernetes.io/instance: nginx
   name: argo-nginx
   namespace: default
 spec:
@@ -11,5 +14,6 @@ spec:
         editor: argo
     spec:
       containers:
-      - name: nginx
-        image: nginx
+        - image: nginx
+          name: nginx
+
