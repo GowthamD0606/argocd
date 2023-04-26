@@ -1,27 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webapp
-  labels:
-    app: webapp
+  name: argo-nginx
+  namespace: default
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: webapp
+  replicas: 1
   template:
     metadata:
       labels:
-        app: webapp
+        editor: argo
     spec:
       containers:
-      - name: webapp
-        image: myregistry/webapp:latest
+      - name: nginx
+        image: nginx
         ports:
-        - containerPort: 80
-
-
-
-
-
-
+        - containerPort: 80  
